@@ -1,7 +1,7 @@
 eXtal
 ============
 
- A faire :
+ TO DO :
 
   - Systeme de statistiques
   - Session
@@ -9,7 +9,7 @@ eXtal
 
 ============
 
- A peaufiner :
+ TO REFINE :
 
   - Moteur de templates
   - Layout (à voir, peut être tout simplement lié au moteur de templates)
@@ -21,7 +21,7 @@ eXtal
 
 ============
 
-A réfléchir :
+ TO THINK :
 
   - Gestion des erreurs
   - Activer / désactiver des fonctions
