@@ -1,0 +1,29 @@
+/**
+* Une description plutôt courte ici
+*
+* Puis vous pouvez continuer une description plus détaillée ici avec autant de lignes que vous le désirez.
+* Vous pouvez insérer des liens vers des ressources externes avec ce genre de tag :
+* {@link http://www.doc-suite.tld  Suite de la Documentation} ce sont "les tags inline"
+* Plutôt pratique tout ça, maintenant voilà la liste de tags.
+*
+* @param        type    $varname    Description
+* @return       type    Description
+* @access       public ou private
+* @author       Nom de l auteur
+* @copyright    Nom et Date
+* @category     Nom    [Pour mieux organiser des elements documentés dans un package. Ex: forms]
+* @version      version
+* @see          Nom d'un autre élément également documenté (attribut, méthode, classe, etc)
+* @link         Adresse URL
+* @since        Une version ou une date
+* @deprecated   (Description)
+* @abstract     [Indique qu une classe est abstraite]
+* @static       [Dire q un élément est static]
+* @global       type $varname Description [Documente une variable globale]
+* @ignore       [Dire à PhpDocumentor d ignoré l élément]
+* @staticvar    type    $varname    Description [Pour variables static utilisées dans une méthode]
+* @todo         Description d'une chose à faire
+* @var          type $varname Description
+* @package      Nom du package
+* @subpackage   Nom du sous-package
+*/

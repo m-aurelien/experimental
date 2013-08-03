@@ -1,0 +1,1 @@
+<p>Une balise p fournie par le template "exemple".</p>

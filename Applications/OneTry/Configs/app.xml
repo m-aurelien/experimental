@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<definitions>
+    <production>
+        <define var="maintenance"       value="1"/>
+        <define var="cache"             value="1"/>
+
+        <define var="mysql_host"        value="localhost"/>
+        <define var="mysql_db_name"     value="database"/>
+        <define var="mysql_login"       value="user"/>
+        <define var="mysql_password"    value="password"/>
+
+        <define var="exempleTab"        value="value1"          type="array" />
+        <define var="exempleTab"        value="value2"          type="array" />
+        <define var="exempleTab"        value="value3"          type="array" />
+        <define var="exempleTab"        value="value10"         type="array"        key="10" />
+    </production>
+
+    <development extend="production">
+        <define var="maintenance"       value="0"/>
+        <define var="cache"             value="0"/>
+
+        <define var="mysql_host"        value="localhost"/>
+        <define var="mysql_db_name"     value="test"/>
+        <define var="mysql_login"       value="root"/>
+        <define var="mysql_password"    value="root"/>
+    </development>
+
+    <devAurelien extend="development">
+        <define var="mysql_host"        value="localhost"/>
+        <define var="mysql_db_name"     value="test"/>
+        <define var="mysql_login"       value="root"/>
+        <define var="mysql_password"    value="root"/>
+
+        <define var="exempleTab"        value="value10rewrite"  type="array"        key="10" />
+        <define var="exempleTab"        value="value11"         type="array"/>
+    </devAurelien>
+</definitions>
+

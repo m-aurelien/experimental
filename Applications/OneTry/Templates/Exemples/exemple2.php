@@ -1,0 +1,1 @@
+<p><?php echo 'Une balise p fournie par le template "exemple2".';?></p>
