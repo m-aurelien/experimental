@@ -29,9 +29,10 @@ abstract class Application
 {
     /**
      * @access private
-     * @var string $_name
+     * @static
+     * @var Application $_instance
      */
-    private $_name;
+    private static $_instance;
     /**
      * @access private
      * @var HTTPRequest $_httpRequest
@@ -85,6 +86,7 @@ abstract class Application
         $this->_user         = new User($this);
         $this->_i18n         = new I18nManager($this);
         $this->_pdo          = new PDOFactory($this);
+        self::$_instance     = $this;
     }
 
     /**
@@ -94,7 +96,7 @@ abstract class Application
      */
     public function controller(){
         $router = new Router();
-        $router->addRoutesConfig($this->name());
+        $router->addRoutesConfig();
 
         try{
             $matchedRoute = $router->route($this->httpRequest()->requestURI());
@@ -106,7 +108,7 @@ abstract class Application
 
         $_GET = array_merge($_GET, $matchedRoute->vars());
 
-        $controllerClass = 'Applications\\'.$this->name().'\\Controllers\\'.$matchedRoute->controller().'Controller';
+        $controllerClass = 'Applications\\'.APP_NAME.'\\Controllers\\'.$matchedRoute->controller().'Controller';
         return new $controllerClass($this, $matchedRoute->controller(), $matchedRoute->action(), $matchedRoute->cacheDuration());
     }
 
@@ -116,24 +118,6 @@ abstract class Application
      * @abstract
      */
     abstract public function run();
-
-    /**
-     * Setter $_name
-     *
-     * @param string $name
-     */
-    public function setName($name){
-        $this->_name = $name;
-    }
-
-    /**
-     * Getter $_name
-     *
-     * @return string $_name
-     */
-    public function name(){
-        return $this->_name;
-    }
 
     /**
      * Getter $_httpRequest
@@ -207,4 +191,13 @@ abstract class Application
         return $this->_pdo;
     }
 
+    /**
+     * Getter $_instance
+     *
+     * @static
+     * @return Application
+     */
+    public static function instance(){
+        return self::$_instance;
+    }
 }

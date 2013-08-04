@@ -21,10 +21,6 @@ abstract class ApplicationComponent{
         return $this->app;
     }
 
-    public function appName(){
-        return $this->app->name();
-    }
-
     public function httpRequest(){
         return $this->app->httpRequest();
     }

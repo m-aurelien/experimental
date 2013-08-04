@@ -38,7 +38,7 @@ class Config extends ApplicationComponent{
         parent::__construct($app);
 
         $this->_xml = new \DOMDocument;
-        $this->_xml->load(SERVER_ROOT.'Applications/'.$this->app()->name().'/Configs/app.xml');
+        $this->_xml->load(SERVER_ROOT.'Applications/'.APP_NAME.'/Configs/app.xml');
 
         foreach ($this->extendList() as $environment) {
             $this->push($environment);

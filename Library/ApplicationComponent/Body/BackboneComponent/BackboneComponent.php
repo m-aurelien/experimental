@@ -20,10 +20,6 @@ abstract class BackboneComponent{
         return $this->backbone;
     }
 
-    public function appName(){
-        return $this->backbone->appName();
-    }
-
     public function httpRequest(){
         return $this->backbone->httpRequest();
     }

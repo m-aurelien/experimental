@@ -31,9 +31,9 @@ class Router{
      *
      * @param $appName
      */
-    public function addRoutesConfig($appName){
+    public function addRoutesConfig(){
         $xml = new \DOMDocument;
-        $xml->load(SERVER_ROOT.'Applications/'.$appName.'/Configs/routes.xml');
+        $xml->load(SERVER_ROOT.'Applications/'.APP_NAME.'/Configs/routes.xml');
 
         $routes = $xml->getElementsByTagName('route');
 

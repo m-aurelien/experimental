@@ -11,8 +11,6 @@ use Library\ApplicationComponent\ApplicationComponent;
 use Library\ApplicationComponent\Body\BackboneComponent\Skin;
 use Library\ApplicationComponent\Cache\CacheDriver;
 use Library\Application;
-use Library\Managers;
-use Library\PDOFactory;
 
 abstract class Backbone extends ApplicationComponent{
     private $controller = '';
@@ -27,7 +25,7 @@ abstract class Backbone extends ApplicationComponent{
         $this->skin = new Skin($this);
 
         // On instancie le model.
-        $modelClass = 'Applications\\'.$this->appName().'\\Models\\'.$controller.'Model';
+        $modelClass = 'Applications\\'.APP_NAME.'\\Models\\'.$controller.'Model';
         $this->model = new $modelClass($this);
 
         $this->setController($controller);
@@ -70,7 +68,7 @@ abstract class Backbone extends ApplicationComponent{
             throw new \InvalidArgumentException('La vue doit être une chaine de caractères valide');
         }
         $this->view = $view;
-        $this->skin->setContentFile(SERVER_ROOT.'Applications'.DIRECTORY_SEPARATOR.$this->app()->name().DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.$this->controller.DIRECTORY_SEPARATOR.$this->view.'.php');
+        $this->skin->setContentFile(SERVER_ROOT.'Applications'.DIRECTORY_SEPARATOR.APP_NAME.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.$this->controller.DIRECTORY_SEPARATOR.$this->view.'.php');
     }
 
     public function controllerName(){

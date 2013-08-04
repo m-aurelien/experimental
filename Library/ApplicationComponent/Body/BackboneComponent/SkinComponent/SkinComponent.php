@@ -20,10 +20,6 @@ abstract class SkinComponent{
         return $this->skin;
     }
 
-    public function appName(){
-        return $this->skin->appName();
-    }
-
     public function httpRequest(){
         return $this->skin->httpRequest();
     }

@@ -9,10 +9,10 @@ namespace Applications\OneTry\Controllers;
 
 
 use Applications\OneTry\I18n\I18n;
+use Applications\OneTry\Models\ORM\eOther;
 use Applications\OneTry\Services\FormBuilder\ExempleFormBuilder;
 use Library\ApplicationComponent\Body\Backbone;
-use Library\ApplicationComponent\Database\DaoGen;
-use Library\Cache;
+use Library\ApplicationComponent\Database\OrmGen;
 use Library\Helper\Filter;
 
 class testController extends Backbone {
@@ -55,7 +55,30 @@ class testController extends Backbone {
 
         //exit;
 
-        $gen = new DaoGen($this->app());
+        $gen = new OrmGen($this->app());
         $gen->generate();
+/*
+        $e = eOther::retrieveByPk(1, 2);
+        $e->setOther('coolll');
+        $e->update();
+
+        $e = new eOther();
+        $e->setId(3);
+        $e->setUser_id(2);
+        $e->setOther('other ?');
+        $e->insert();
+
+        $e = eOther::retrieveByPk(3, 2);
+        $e->delete();
+*/
+        /*
+        $stmt = $this->pdo()->mysql()->prepare('SELECT * FROM other');
+        $stmt->execute();
+        $result = $stmt->fetchAllObjectOfClass("eOther");
+        var_dump($result);
+        */
+
+        //var_dump(eOther::doSelect('SELECT * FROM other'));
+
     }
 }

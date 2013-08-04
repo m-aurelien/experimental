@@ -39,7 +39,7 @@ class Logger extends ApplicationComponent{
     public function __construct(Application $app){
         parent::__construct($app);
 
-        $path = SERVER_ROOT.'Applications'.DIRECTORY_SEPARATOR.$this->app()->name().DIRECTORY_SEPARATOR.'Logs'.DIRECTORY_SEPARATOR;
+        $path = SERVER_ROOT.'Applications'.DIRECTORY_SEPARATOR.APP_NAME.DIRECTORY_SEPARATOR.'Logs'.DIRECTORY_SEPARATOR;
         if(!is_dir($path)){
             mkdir($path);
         }

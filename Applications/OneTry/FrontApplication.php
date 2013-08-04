@@ -12,15 +12,13 @@ use Library\Helper\Filter;
 
 class FrontApplication extends Application{
     public function __construct(){
-        $this->setName('OneTry');
-
         parent::__construct();
 
         $this->i18n()->setLangDefault('en');
     }
 
     public function run(){
-        if(Filter::bool($this->config()->get('maintenance'))) $this->httpResponse->redirectMaintenance();
+        if(Filter::bool($this->config()->get('maintenance'))) $this->httpResponse()->redirectMaintenance();
         if(Filter::bool($this->config()->get('cache'))) $this->cache()->enable();
 
         $controller = $this->controller();

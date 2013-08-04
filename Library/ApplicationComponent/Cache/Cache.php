@@ -41,7 +41,7 @@ class Cache extends ApplicationComponent{
     public function __construct(Application $app){
         parent::__construct($app);
 
-        $path = SERVER_ROOT.'Applications'.DIRECTORY_SEPARATOR.$this->appName().DIRECTORY_SEPARATOR.'Caches'.DIRECTORY_SEPARATOR;
+        $path = SERVER_ROOT.'Applications'.DIRECTORY_SEPARATOR.APP_NAME.DIRECTORY_SEPARATOR.'Caches'.DIRECTORY_SEPARATOR;
         if(!is_dir($path)){
             mkdir($path);
         }

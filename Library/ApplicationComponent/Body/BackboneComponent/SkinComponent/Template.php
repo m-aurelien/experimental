@@ -15,7 +15,7 @@ class Template extends SkinComponent{
 
     public function displayTemplate($file) {
         ob_start();
-            require SERVER_ROOT.'Applications'.DIRECTORY_SEPARATOR.$this->appName().DIRECTORY_SEPARATOR.'Templates'.DIRECTORY_SEPARATOR.$file[1].'.php';
+            require SERVER_ROOT.'Applications'.DIRECTORY_SEPARATOR.APP_NAME.DIRECTORY_SEPARATOR.'Templates'.DIRECTORY_SEPARATOR.$file[1].'.php';
         return ob_get_clean();
     }
 

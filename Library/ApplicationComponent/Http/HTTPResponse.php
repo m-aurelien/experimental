@@ -49,7 +49,7 @@ class HTTPResponse extends ApplicationComponent{
     public function redirect404(){
         $this->addHeader('HTTP/1.1 404 Not Found');
 
-        exit(Skin::getContentFile(SERVER_ROOT.'Applications'.DIRECTORY_SEPARATOR.$this->app()->name().DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'redirect'.DIRECTORY_SEPARATOR.'404.php'));
+        exit(Skin::getContentFile(SERVER_ROOT.'Applications'.DIRECTORY_SEPARATOR.APP_NAME.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'redirect'.DIRECTORY_SEPARATOR.'404.php'));
     }
 
     /**
@@ -58,7 +58,7 @@ class HTTPResponse extends ApplicationComponent{
     public function redirectMaintenance(){
         $this->addHeader('HTTP/1.1 503 Service Temporarily Unavailable');
 
-        exit(Skin::getContentFile(SERVER_ROOT.'Applications'.DIRECTORY_SEPARATOR.$this->app()->name().DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'redirect'.DIRECTORY_SEPARATOR.'maintenance.php'));
+        exit(Skin::getContentFile(SERVER_ROOT.'Applications'.DIRECTORY_SEPARATOR.APP_NAME.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.'redirect'.DIRECTORY_SEPARATOR.'maintenance.php'));
     }
 
     /**

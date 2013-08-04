@@ -64,7 +64,7 @@ class Skin extends BackboneComponent{
 
             if($this->layout){
                 ob_start();
-                    require SERVER_ROOT.'Applications/'.$this->backbone()->app()->name().'/Templates/layout.php';
+                    require SERVER_ROOT.'Applications/'.APP_NAME.'/Templates/layout.php';
                 $generatedSkin = ob_get_clean();
             }else{
                 $generatedSkin = $content;
