@@ -23,7 +23,11 @@ class SubmitField extends Field {
 
         $widget .= '<input type="submit"';
         if($this->name()) $widget .= ' name="'.$this->name().'"';
-        if($this->classes()) $widget .= ' class="'.$this->classes().'"';
+
+        $widget .= ' class="btn ';
+        if($this->classes()) $widget .= $this->classes();
+        $widget .= '"';
+
         if($this->value()) $widget .= ' value="'.$this->label().'"';
         $widget .= ' />';
 

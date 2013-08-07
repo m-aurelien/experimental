@@ -29,14 +29,23 @@ class PasswordField extends Field{
     public function buildWidget(){
         $widget = '';
 
+        $widget .= '<div class="form-group">';
+
         if($this->label()) $widget  = '<label>'.$this->label().'</label>';
 
         $widget .= '<input type="password" name="'.$this->name().'"';
+
+        $widget .= ' class="form-control ';
+        if($this->classes()) $widget .= $this->classes();
+        $widget .= '"';
+
         if ($this->hasValue()) $widget .= ' value="'.htmlspecialchars($this->value()).'"';
         if (!empty($this->_maxLength)) $widget .= ' maxlength="'.$this->_maxLength.'"';
         $widget .= ' />';
 
         if ($this->hasErrorMessage()) $widget .= '<p>'.$this->errorMessage().'</p>';
+
+        $widget .= '</div>';
 
         return $widget;
     }

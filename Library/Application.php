@@ -25,8 +25,7 @@ use Library\Route\Router;
  * @author Aurelien Mecheri
  * @abstract
  */
-abstract class Application
-{
+abstract class Application{
     /**
      * @access private
      * @static
@@ -86,7 +85,6 @@ abstract class Application
         $this->_user         = new User($this);
         $this->_i18n         = new I18nManager($this);
         $this->_pdo          = new PDOFactory($this);
-        self::$_instance     = $this;
     }
 
     /**
@@ -118,6 +116,13 @@ abstract class Application
      * @abstract
      */
     abstract public function run();
+
+    /**
+     * Setter $_instance
+     */
+    public function setCurrentInstance(){
+        self::$_instance = $this;
+    }
 
     /**
      * Getter $_httpRequest

@@ -32,9 +32,16 @@ class TextField extends Field{
     public function buildWidget(){
         $widget = '';
 
+        $widget .= '<div class="form-group">';
+
         if($this->label()) $widget  = '<label>'.$this->label().'</label>';
 
         $widget .= '<textarea name="'.$this->name().'"';
+
+        $widget .= ' class="form-control ';
+        if($this->classes()) $widget .= $this->classes();
+        $widget .= '"';
+
         if (!empty($this->_cols)) $widget .= ' cols="'.$this->_cols.'"';
         if (!empty($this->_rows)) $widget .= ' rows="'.$this->_rows.'"';
         $widget .= '>';
@@ -42,6 +49,8 @@ class TextField extends Field{
         $widget .= '</textarea>';
 
         if ($this->hasErrorMessage()) $widget .= '<p>'.$this->errorMessage().'</p>';
+
+        $widget .= '</div>';
 
         return $widget;
     }

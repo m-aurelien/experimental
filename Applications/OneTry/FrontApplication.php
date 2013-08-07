@@ -24,9 +24,10 @@ class FrontApplication extends Application{
         $controller = $this->controller();
         $controller->execute();
 
+        $controller->skin()->js()->prependSource('jquery.min');
+        $controller->skin()->js()->appendSource('bootstrap.min');
+
         $controller->skin()->css()->prependSource('bootstrap.min');
-        $controller->skin()->css()->appendSource('bootstrap-responsive.min');
-        $controller->skin()->js()->prependSource('bootstrap.min');
 
         $this->httpResponse()->setSkin($controller->skin());
         $this->httpResponse()->send();

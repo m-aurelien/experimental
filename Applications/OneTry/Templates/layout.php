@@ -5,8 +5,8 @@
 
     <meta http-equiv="Content-type" content="text/html; charset=iso-8859-1" />
 
-    <?php echo $this->css()->render(); ?>
     <?php echo $this->js()->render(); ?>
+    <?php echo $this->css()->render(); ?>
 </head>
 
 <body>
@@ -19,16 +19,20 @@
         <div id="menu">
             <ul>
                 <li><a href="/">Accueil</a></li>
-                <?php if ($this->backbone()->app()->user()->isAuthenticated()) { ?>
-                    <li><a href="/admin/">Admin</a></li>
-                    <li><a href="/admin/news-insert.html">Ajouter une news</a></li>
+                <?php if ($this->user()->isAuthenticated()) { ?>
+                    <li><a href="/experimental/onetry/test/logout">Deconnexion</a></li>
                 <?php } ?>
             </ul>
     </div>
 
     <div id="content-wrap">
         <div id="main">
-            <?php if ($this->backbone()->app()->user()->hasFlash()) echo '<p style="text-align: center;">', $this->backbone()->app()->user()->flash(), '</p>'; ?>
+            <?php if ($this->user()->hasFlash()) : ?>
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <?php echo $this->user()->flash(); ?>
+                </div>
+            <?php endif; ?>
 
             <?php echo $content; ?>
         </div>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <routes>
+    <route url="/experimental/onetry/test/logout"                               controller="test"           action="logout"                         />
     <route url="/experimental/onetry/test/index"                                controller="test"           action="index"                          />
     <route url="/experimental/onetry/test/index-(.+)-(.+)"      cache="10"      controller="test"           action="index"      vars="key1, key2"   />
     <route url="/experimental/onetry/test/.*"                   cache="10"      controller="test"           action="index"                          />

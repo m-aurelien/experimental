@@ -43,6 +43,11 @@ class Form {
     private $_attributes = array();
     /**
      * @access private
+     * @var string $_legend
+     */
+    private $_legend;
+    /**
+     * @access private
      * @var array $_fields
      */
     private $_fields = array();
@@ -75,6 +80,15 @@ class Form {
     }
 
     /**
+     * Setter $_legend
+     *
+     * @param string $legend
+     */
+    public function setLegend($legend){
+        $this->_legend = $legend;
+    }
+
+    /**
      * Setter Field
      *
      * @param array $fields
@@ -97,10 +111,14 @@ class Form {
         }
         $view .= '>';
 
+        $view .= '<fieldset>';
+        if($this->_legend) $view .= '<legend>'.$this->_legend.'</legend>';
+
         foreach ($this->_fields as $field){
             $view .= $field->buildWidget();
         }
 
+        $view .= '</fieldset>';
         $view .= '</form>';
         return $view;
     }

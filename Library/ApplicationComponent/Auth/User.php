@@ -7,42 +7,87 @@
 
 namespace Library\ApplicationComponent\Auth;
 
+use Library\Application;
 use Library\ApplicationComponent\ApplicationComponent;
-
-session_start();
+use Library\Helper\Token;
 
 class User extends ApplicationComponent{
+    private $_authId = null;
+    private $_flash = null;
+    private $_attributes = array();
+    private $_token;
 
-    public function getAttribute($attr){
-        return isset($_SESSION[$attr]) ? $_SESSION[$attr] : null;
+    public function __construct(Application $app){
+        parent::__construct($app);
+
+        $this->_token = new Token();
+        try{
+            $values = $this->_token->values();
+            $this->_authId = $values['authId'];
+            $this->_flash = $values['flash'];
+            $this->_attributes = $values['attributes'];
+            $this->generateToken();
+        }catch(\Exception $e){}
     }
 
-    public function flash(){
-        $flash = $_SESSION['flash'];
-        unset($_SESSION['flash']);
-        return $flash;
-    }
-
-    public function hasFlash(){
-        return isset($_SESSION['flash']);
-    }
-
-    public function isAuthenticated(){
-        return isset($_SESSION['auth']) && $_SESSION['auth'] === true;
+    public function setAttributes(array $attributes){
+        $this->_attributes = $attributes;
     }
 
     public function setAttribute($attr, $value){
-        $_SESSION[$attr] = $value;
+        $this->_attributes[$attr] = $value;
+        $this->generateToken();
     }
 
-    public function setAuthenticated($authenticated = true){
-        if (!is_bool($authenticated)){
-            throw new \InvalidArgumentException('La valeur spécifiée à la méthode User::setAuthenticated() doit être un boolean');
-        }
-        $_SESSION['auth'] = $authenticated;
+    public function attributes(){
+        return $this->_attributes;
+    }
+
+    public function attribute($attr){
+        return array_key_exists($attr, $this->_attributes) ? $this->_attributes[$attr] : null;
+    }
+
+    public function hasFlash(){
+        return !is_null($this->_flash);
     }
 
     public function setFlash($value){
-        $_SESSION['flash'] = $value;
+        $this->_flash = $value;
+        $this->generateToken();
+    }
+
+    public function flash(){
+        $flash = $this->_flash;
+        $this->_flash = null;
+        $this->generateToken();
+        return $flash;
+    }
+
+    public function isAuthenticated(){
+        return !is_null($this->_authId);
+    }
+
+    public function setAuthId($authId){
+       $this->_authId = $authId;
+       $this->generateToken();
+    }
+
+    public function authId(){
+        return $this->_authId;
+    }
+
+    public function disconnect($msg){
+        $this->_authId = null;
+        $this->_flash = $msg;
+        $this->generateToken();
+    }
+
+    public function setTokenValidityTime($time){
+        $this->_token->setValidityTime($time);
+    }
+
+    private function generateToken(){
+        $this->_token->setValues(array('authId' => $this->_authId, 'flash' => $this->_flash, 'attributes' => $this->_attributes));
+        $this->_token->generate();
     }
 }

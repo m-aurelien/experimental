@@ -15,6 +15,7 @@ abstract class ApplicationComponent{
 
     public function __construct(Application $app){
         $this->app = $app;
+        $app->setCurrentInstance();
     }
 
     public function app(){

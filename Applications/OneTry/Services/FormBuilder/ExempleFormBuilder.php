@@ -19,6 +19,7 @@ class ExempleFormBuilder extends FormBuilder{
     public function build(){
         $this->form()->setMethod('POST');
         $this->form()->setAction('#');
+        $this->form()->setLegend('Login');
 
         $this->form()->add(array(new StringField(array('label' => 'Login',
                                                        'name' => 'login',
@@ -32,6 +33,6 @@ class ExempleFormBuilder extends FormBuilder{
                                                                                new NotNullValidator('Merci de remplir le champ')))),
                                  new SubmitField(array('label' => 'Submit',
                                                        'name' => 'submit',
-                                                       'classes' => 'btn'))));
+                                                       'classes' => 'btn-default'))));
     }
 }

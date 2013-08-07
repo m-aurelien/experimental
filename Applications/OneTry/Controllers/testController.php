@@ -14,8 +14,18 @@ use Applications\OneTry\Services\FormBuilder\ExempleFormBuilder;
 use Library\ApplicationComponent\Body\Backbone;
 use Library\ApplicationComponent\Database\OrmGen;
 use Library\Helper\Filter;
+use Library\Helper\Token;
 
 class testController extends Backbone {
+
+    public function loginAction(){
+
+    }
+
+    public function logoutAction(){
+        $this->user()->disconnect('Disconnected !');
+        $this->httpResponse()->redirect('/experimental/onetry/test/index');
+    }
 
     public function indexAction(){
         $this->skin()->addTitle('Simple Titre');
@@ -83,9 +93,13 @@ class testController extends Backbone {
         $form = new ExempleFormBuilder();
         $form->build();
         if($form->form()->isPostAndValid()){
-            var_dump('valid !');
+            $this->user()->setAuthId(42);
+            $this->user()->setFlash('Connected ! ');
         }
         echo $form->form();
+
+        var_dump($this->user()->authId());
+
 
     }
 }
