@@ -12,8 +12,8 @@ use Library\ApplicationComponent\ApplicationComponent;
 
 class I18nManager extends ApplicationComponent{
 
-    private $lang_user = null;
-    private $lang_default = null;
+    private $_lang_user = null;
+    private $_lang_default = null;
 
     public function __construct(){
         $langue = explode(',',$_SERVER['HTTP_ACCEPT_LANGUAGE']);
@@ -28,42 +28,45 @@ class I18nManager extends ApplicationComponent{
      * @param string $lang
      * @return string|NULL
      */
-     public function translate($called, array $params = array()) {
+    public function translate($called, array $params = array()){
         $msg = call_user_func('\Applications\OneTry\I18n\I18n::'.$called, $this);
         return vsprintf($msg, $params);
-
     }
 
     /**
-     * @param mixed $lang_default
+     * Setter $_lang_default
+     *
+     * @param string $lang_default
      */
-    public function setLangDefault($lang_default)
-    {
-        $this->lang_default = $lang_default;
+    public function setLangDefault($lang_default){
+        $this->_lang_default = $lang_default;
     }
 
     /**
-     * @return mixed
+     * Getter $_lang_default
+     *
+     * @return string $_lang_default
      */
-    public function langDefault()
-    {
-        return $this->lang_default;
+    public function langDefault(){
+        return $this->_lang_default;
     }
 
     /**
-     * @param mixed $lang_user
+     * Setter $_lang_user
+     *
+     * @param string $lang_user
      */
-    public function setLangUser($lang_user)
-    {
-        $this->lang_user = $lang_user;
+    public function setLangUser($lang_user){
+        $this->_lang_user = $lang_user;
     }
 
     /**
-     * @return mixed
+     * Getter $_lang_user
+     *
+     * @return string $_lang_user
      */
-    public function langUser()
-    {
-        return $this->lang_user;
+    public function langUser(){
+        return $this->_lang_user;
     }
 
 

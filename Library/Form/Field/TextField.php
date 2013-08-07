@@ -7,60 +7,68 @@
 
 namespace Library\Form\Field;
 
+/**
+ * Class TextField
+ * @package Library\Form\Field
+ * @author Aurelien Mecheri
+ */
+class TextField extends Field{
+    /**
+     * @access private
+     * @var
+     */
+    private $_cols;
+    /**
+     * @access private
+     * @var
+     */
+    private $_rows;
 
-class TextField extends Field
-{
-    private $cols;
-    private $rows;
-
-    public function buildWidget()
-    {
+    /**
+     * Builder
+     *
+     * @return string
+     */
+    public function buildWidget(){
         $widget = '';
 
-        if ($this->hasErrorMessage())
-        {
-            $widget .= $this->errorMessage().'<br />';
-        }
+        if($this->label()) $widget  = '<label>'.$this->label().'</label>';
 
-        $widget .= '<label>'.$this->label().'</label><textarea name="'.$this->name().'"';
-
-        if (!empty($this->cols))
-        {
-            $widget .= ' cols="'.$this->cols.'"';
-        }
-
-        if (!empty($this->rows))
-        {
-            $widget .= ' rows="'.$this->rows.'"';
-        }
-
+        $widget .= '<textarea name="'.$this->name().'"';
+        if (!empty($this->_cols)) $widget .= ' cols="'.$this->_cols.'"';
+        if (!empty($this->_rows)) $widget .= ' rows="'.$this->_rows.'"';
         $widget .= '>';
+        if ($this->hasValue()) $widget .= htmlspecialchars($this->value());
+        $widget .= '</textarea>';
 
-        if ($this->hasValue())
-        {
-            $widget .= htmlspecialchars($this->value());
-        }
+        if ($this->hasErrorMessage()) $widget .= '<p>'.$this->errorMessage().'</p>';
 
-        return $widget.'</textarea>';
+        return $widget;
     }
 
-    public function setCols($cols)
-    {
+    /**
+     * Setter $_cols
+     *
+     * @param int $cols
+     */
+    public function setCols($cols){
         $cols = (int) $cols;
 
-        if ($cols > 0)
-        {
-            $this->cols = $cols;
+        if ($cols > 0){
+            $this->_cols = $cols;
         }
     }
 
-    public function setRows($rows)
-    {
+    /**
+     * Setter $_rows
+     *
+     * @param int $rows
+     */
+    public function setRows($rows){
         $rows = (int) $rows;
 
-        if ($rows > 0)
-        {
-            $this->rows = $rows;
+        if ($rows > 0){
+            $this->_rows = $rows;
         }
     }
 }

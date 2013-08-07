@@ -7,11 +7,20 @@
 
 namespace Library\Form\Validator;
 
-
-class NotNullValidator extends Validator
-{
-    public function isValid($value)
-    {
+/**
+ * NotNullValidator
+ *
+ * @package Library\Form\Validator
+ * @author Aurelien Mecheri
+ */
+class NotNullValidator extends Validator{
+    /**
+     * Check if value is not null
+     *
+     * @param $value
+     * @return bool
+     */
+    public function isValid($value){
         return $value != '';
     }
 }

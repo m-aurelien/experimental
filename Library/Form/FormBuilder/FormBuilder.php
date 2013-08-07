@@ -10,24 +10,52 @@ namespace Library\Form\FormBuilder;
 
 use Library\Form\Form;
 
-abstract class FormBuilder
-{
-    private $form;
+/**
+ * FormBuilder
+ *
+ * @package Library\Form\FormBuilder
+ * @author Aurelien Mecheri
+ * @abstract
+ */
+abstract class FormBuilder{
+    /**
+     * @access private
+     * @var Form $_form
+     */
+    private $_form;
 
-    public function __construct()
-    {
+    /**
+     * Construct : Instanciates Form in $_form
+     * @param null $method
+     * @param null $action
+     * @param array $attributes
+     */
+    public function __construct(){
         $this->setForm(new Form());
     }
 
+    /**
+     * Builder
+     *
+     * @abstract
+     */
     abstract public function build();
 
-    public function setForm(Form $form)
-    {
-        $this->form = $form;
+    /**
+     * Setter $_form
+     *
+     * @param Form $form
+     */
+    public function setForm(Form $form){
+        $this->_form = $form;
     }
 
-    public function form()
-    {
-        return $this->form;
+    /*
+     * Getter $_form
+     *
+     * return Form $form
+     */
+    public function form(){
+        return $this->_form;
     }
 }

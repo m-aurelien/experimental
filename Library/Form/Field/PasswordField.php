@@ -7,12 +7,14 @@
 
 namespace Library\Form\Field;
 
+
 /**
- * Class StringField
+ * PasswordField
+ *
  * @package Library\Form\Field
  * @author Aurelien Mecheri
  */
-class StringField extends Field{
+class PasswordField extends Field{
     /**
      * @access private
      * @var
@@ -29,7 +31,7 @@ class StringField extends Field{
 
         if($this->label()) $widget  = '<label>'.$this->label().'</label>';
 
-        $widget .= '<input type="text" name="'.$this->name().'"';
+        $widget .= '<input type="password" name="'.$this->name().'"';
         if ($this->hasValue()) $widget .= ' value="'.htmlspecialchars($this->value()).'"';
         if (!empty($this->_maxLength)) $widget .= ' maxlength="'.$this->_maxLength.'"';
         $widget .= ' />';

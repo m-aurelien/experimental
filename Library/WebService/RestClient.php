@@ -1,10 +1,8 @@
 <?php
 /**
- * Created by JetBrains PhpStorm.
- * User: Aurelien
+ * Created by Aurelien
  * Date: 25/07/13
  * Time: 21:17
- * To change this template use File | Settings | File Templates.
  */
 
 namespace Library\WebService;

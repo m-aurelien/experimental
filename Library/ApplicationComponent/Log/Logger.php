@@ -10,31 +10,82 @@ namespace Library\ApplicationComponent\Log;
 use Library\Application;
 use Library\ApplicationComponent\ApplicationComponent;
 
+/**
+ * Logger
+ *
+ * @package Library\ApplicationComponent\Log
+ * @author Aurelien Mecheri
+ */
 class Logger extends ApplicationComponent{
 
-    private $folder;
+    /**
+     * @access private
+     * @var string $_folder
+     */
+    private $_folder;
 
-    // Période (pour l'archivage des logs)
-    const PERIOD_VOID   = 'VOID';    // Aucun archivage
-    const PERIOD_DAY    = 'DAY';     // Archivage journalier
-    const PERIOD_MONTH  = 'MONTH';   // Archivage mensuel
-    const PERIOD_YEAR   = 'YEAR';    // Archivage annuel
+    /**
+     * Const PERIOD_VOID
+     * Without archive
+     */
+    const PERIOD_VOID   = 'VOID';
+    /**
+     * Const PERIOD_DAY
+     * Daily archive
+     */
+    const PERIOD_DAY    = 'DAY';
+    /**
+     * Const PERIOD_MONTH
+     * Monthly archive
+     */
+    const PERIOD_MONTH  = 'MONTH';
+    /**
+     * Const PERIOD_YEAR
+     * Yearly archive
+     */
+    const PERIOD_YEAR   = 'YEAR';
 
-    // Niveau d'importance
-    const LEVEL_TRACE   = 'Trace';   // Entrée et sortie de méthodes
-    const LEVEL_DEBUG   = 'Debug';   // Affichage de valeur de données
-    const LEVEL_INFO    = 'Info';    // Chargement d'un fichier, début et fin d'exécution d'un traitement long
-    const LEVEL_WARN    = 'Warn';    // Erreur de login, données invalides
-    const LEVEL_ERROR   = 'Error';   // Toutes les exceptions capturées qui n'empêchent pas l'application de fonctionner
-    const LEVEL_FATAL   = 'Fatal';   // Indisponibilité d'une base de données, toutes les exceptions qui empêchent l'application de fonctionner
-    const LEVEL_GENERAL = 'General'; // Non classé
+    /**
+     * Const LEVEL_TRACE
+     * ex : In / Out of method
+     */
+    const LEVEL_TRACE   = 'Trace';
+    /**
+     * Const LEVEL_DEBUG
+     * ex : Display var
+     */
+    const LEVEL_DEBUG   = 'Debug';
+    /**
+     * Const LEVEL_INFO
+     * ex : Load file, begin / end of long execution
+     */
+    const LEVEL_INFO    = 'Info';
+    /**
+     * Const LEVEL_WARN
+     * ex : Login error, bad data
+     */
+    const LEVEL_WARN    = 'Warn';
+    /**
+     * Const LEVEL_ERROR
+     * ex : All exceptions that are not critical
+     */
+    const LEVEL_ERROR   = 'Error';
+    /**
+     * Const LEVEL_FATAL
+     * ex: DB unavailable, all critical exceptions
+     */
+    const LEVEL_FATAL   = 'Fatal';
+    /**
+     * Const LEVEL_GENERAL
+     * ex: All other
+     */
+    const LEVEL_GENERAL = 'General';
     
     /**
-     * Constructeur
-     * Vérifie que le dossier éxiste (default: ./Applications/{AppName}/Logs/)
+     * Construct
+     * Check if folder exist (default: ./Applications/{AppName}/Logs/)
      *
-     * @param Application $app Instance de l'application
-     * @throws \Exception Levée si le dossier n'existe pas
+     * @param Application $app
      */
     public function __construct(Application $app){
         parent::__construct($app);
@@ -43,24 +94,25 @@ class Logger extends ApplicationComponent{
         if(!is_dir($path)){
             mkdir($path);
         }
-        $this->folder = realpath($path);
+        $this->_folder = realpath($path);
     }
-    
+
     /**
-     * Retourne le chemin vers un fichier de log déterminé à partir des paramètres $level, $name et $period.
-	 * (ex: /Applications/{AppName}/Logs/Error/2013/2013_erreur.log)
-     * Elle créé le chemin si il n'éxiste pas.
-	 *
-	 * @param string $level Dossier dans lequel sera enregistré le fichier de log
-     * @param string $name Nom du fichier de log
-     * @param string $period Période : PERIOD_VOID, PERIOD_DAY, PERIOD_MONTH ou PERIOD_YEAR
-	 * @return string Chemin vers le fichier de log
-    **/
+     * Returns the path of the log file determined by the parameters $level, $name et $period.
+     * (ex: /Applications/{AppName}/Logs/Error/2013/2013_erreur.log)
+     * Create the path if not exist
+     *
+     * @param string $level
+     * @param string $name
+     * @param string $period
+     * @return string
+     * @throws \Exception
+     **/
     protected function path($level, $name, $period = self::PERIOD_VOID){
-        # Création dossier du level (./Applications/{AppName}/Logs/{Level}/)
+        //Create folder of level (./Applications/{AppName}/Logs/{Level}/)
         switch($level){
             case self::LEVEL_GENERAL:
-                $path = $this->folder.'/';
+                $path = $this->_folder.'/';
                 break;
             case self::LEVEL_TRACE:
             case self::LEVEL_DEBUG:
@@ -68,17 +120,17 @@ class Logger extends ApplicationComponent{
             case self::LEVEL_WARN:
             case self::LEVEL_ERROR:
             case self::LEVEL_FATAL:
-                $path = $this->folder.'/'.$level.'/';
+                $path = $this->_folder.'/'.$level.'/';
                 if(!is_dir($path)){
                     mkdir($path);
                 }
                 break;
             default:
-                throw new \Exception('Level non pris en charge');
+                throw new \Exception('Level unsupported');
                 break;
         }
 
-        # Création du dossier de la période (./Applications/{AppName}/Logs/{Level}/{Period}/)
+        //Create folder of period (./Applications/{AppName}/Logs/{Level}/{Period}/)
         switch($period){
             case self::PERIOD_DAY:
                 $current_day = date('Ymd');
@@ -89,12 +141,12 @@ class Logger extends ApplicationComponent{
                 $logfile = $path.'/'.$current_day.'_'.$name.'.log';
                 break;
             case self::PERIOD_MONTH:
-                $mois_courant = date('Ym');
-                $path = $path.$mois_courant;
+                $current_month = date('Ym');
+                $path = $path.$current_month;
                 if( !is_dir($path) ){
                     mkdir($path);
                 }
-                $logfile = $path.'/'.$mois_courant.'_'.$name.'.log';
+                $logfile = $path.'/'.$current_month.'_'.$name.'.log';
                 break;
             case self::PERIOD_YEAR:
                 $current_year = date('Y');
@@ -108,7 +160,7 @@ class Logger extends ApplicationComponent{
                 $logfile = $path.$name.'.log';
                 break;
             default:
-                throw new \Exception('Periode non prise en charge');
+                throw new \Exception('Period unsupported');
                 break;
         }
         
@@ -116,30 +168,30 @@ class Logger extends ApplicationComponent{
     }
     
     /**
-	 * Enregistre $row dans le fichier log déterminé à partir des paramètres $level, $name et $period
+	 * Save $row in the log file determined by the parameters $level, $name et $period
      *
-     * @param string $level Dossier dans lequel sera enregistré le fichier de log
-     * @param string $name Nom du fichier de log
-     * @param string $row Texte à ajouter au fichier de log
-     * @param string $period Période : PERIOD_VOID, PERIOD_DAY, PERIOD_MONTH ou PERIOD_YEAR
+     * @param string $level
+     * @param string $name
+     * @param string $row
+     * @param string $period
+     * @throws \Exception
     **/
     protected function log($level, $name, $row, $period){
-        # Contrôle des arguments
         if(empty($name) || empty($row))throw new \Exception("Paramètre manquant");
 
         $logfile = $this->path($level, $name, $period);
 
-		# Ajout de la date, de l'heure, du level en début de ligne et du retour chariot en fin de ligne
+		//Add datetime and level to start line and cr to end line
         $row = date('d/m/Y H:i:s').' ['.$level.'] '.$row."\n";
 
         $this->write($logfile, $row);
     }
     
     /**
-     * Écrit (append) $row dans $logfile
+     * Write (append) $row in $logfile
      *
-     * @param string $logfile Chemin vers le fichier de log
-     * @param string $row Chaîne de caractères à ajouter au fichier
+     * @param string $logfile
+     * @param string $row
     **/
     protected function write($logfile, $row){
         $file = fopen($logfile,'a+');
@@ -148,77 +200,77 @@ class Logger extends ApplicationComponent{
     }
 
     /**
-     * Enregistre $row dans le fichier log Trace déterminé à partir des paramètres $name et $period
+     * Save $row in the log Trace file determined by the parameters $name et $period
      *
-     * @param string $name Nom du fichier de log
-     * @param string $row Texte à ajouter au fichier de log
-     * @param string $period Période : PERIOD_VOID, PERIOD_DAY, PERIOD_MONTH ou PERIOD_YEAR
+     * @param string $name
+     * @param string $row
+     * @param string $period
      **/
     public function trace($name, $row, $period = self::PERIOD_VOID){
         $this->log(self::LEVEL_TRACE, $name, $row, $period);
     }
 
     /**
-     * Enregistre $row dans le fichier log Debug déterminé à partir des paramètres $name et $period
+     * Save $row in the log Debug file determined by the parameters $name et $period
      *
-     * @param string $name Nom du fichier de log
-     * @param string $row Texte à ajouter au fichier de log
-     * @param string $period Période : PERIOD_VOID, PERIOD_DAY, PERIOD_MONTH ou PERIOD_YEAR
+     * @param string $name
+     * @param string $row
+     * @param string $period
      **/
     public function debug($name, $row, $period = self::PERIOD_VOID){
         $this->log(self::LEVEL_DEBUG, $name, $row, $period);
     }
 
     /**
-     * Enregistre $row dans le fichier log Info déterminé à partir des paramètres $name et $period
+     * Save $row in the log Info file determined by the parameters $name et $period
      *
-     * @param string $name Nom du fichier de log
-     * @param string $row Texte à ajouter au fichier de log
-     * @param string $period Période : PERIOD_VOID, PERIOD_DAY, PERIOD_MONTH ou PERIOD_YEAR
+     * @param string $name
+     * @param string $row
+     * @param string $period
      **/
     public function info($name, $row, $period = self::PERIOD_VOID){
         $this->log(self::LEVEL_INFO, $name, $row, $period);
     }
 
     /**
-     * Enregistre $row dans le fichier log Warn déterminé à partir des paramètres $name et $period
+     * Save $row in the log Warn file determined by the parameters $name et $period
      *
-     * @param string $name Nom du fichier de log
-     * @param string $row Texte à ajouter au fichier de log
-     * @param string $period Période : PERIOD_VOID, PERIOD_DAY, PERIOD_MONTH ou PERIOD_YEAR
+     * @param string $name
+     * @param string $row
+     * @param string $period
      **/
     public function warn($name, $row, $period = self::PERIOD_VOID){
         $this->log(self::LEVEL_WARN, $name, $row, $period);
     }
 
     /**
-     * Enregistre $row dans le fichier log Error déterminé à partir des paramètres $name et $period
+     * Save $row in the log Error file determined by the parameters $name et $period
      *
-     * @param string $name Nom du fichier de log
-     * @param string $row Texte à ajouter au fichier de log
-     * @param string $period Période : PERIOD_VOID, PERIOD_DAY, PERIOD_MONTH ou PERIOD_YEAR
+     * @param string $name
+     * @param string $row
+     * @param string $period
      **/
     public function error($name, $row, $period = self::PERIOD_VOID){
         $this->log(self::LEVEL_ERROR, $name, $row, $period);
     }
 
     /**
-     * Enregistre $row dans le fichier log Fatal déterminé à partir des paramètres $name et $period
+     * Save $row in the log Fatal file determined by the parameters $name et $period
      *
-     * @param string $name Nom du fichier de log
-     * @param string $row Texte à ajouter au fichier de log
-     * @param string $period Période : PERIOD_VOID, PERIOD_DAY, PERIOD_MONTH ou PERIOD_YEAR
+     * @param string $name
+     * @param string $row
+     * @param string $period
      **/
     public function fatal($name, $row, $period = self::PERIOD_VOID){
         $this->log(self::LEVEL_FATAL, $name, $row, $period);
     }
 
     /**
-     * Enregistre $row dans le fichier log General déterminé à partir des paramètres $name et $period
+     * Save $row in the log General file determined by the parameters $name et $period
      *
-     * @param string $name Nom du fichier de log
-     * @param string $row Texte à ajouter au fichier de log
-     * @param string $period Période : PERIOD_VOID, PERIOD_DAY, PERIOD_MONTH ou PERIOD_YEAR
+     * @param string $name
+     * @param string $row
+     * @param string $period
      **/
     public function general($name, $row, $period = self::PERIOD_VOID){
         $this->log(self::LEVEL_GENERAL, $name, $row, $period);

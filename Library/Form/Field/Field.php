@@ -8,138 +8,230 @@
 namespace Library\Form\Field;
 
 
-abstract class Field
-{
-    private $errorMessage;
-    private $label;
-    private $name;
-    private $validators = array();
-    private $value;
-    private $length;
+use Library\Form\Validator\Validator;
 
-    public function __construct(array $options = array())
-    {
-        if (!empty($options))
-        {
+/**
+ * Field
+ *
+ * @package Library\Form\Field
+ * @author Aurelien Mecheri
+ * @abstract
+ */
+abstract class Field{
+    /**
+     * @access private
+     * @var string $_label
+     */
+    private $_label;
+    /**
+     * @access private
+     * @var string $_name
+     */
+    private $_name;
+    /**
+     * @access private
+     * @var string $_value
+     */
+    private $_value;
+    /**
+     * @access private
+     * @var string $_classes
+     */
+    private $_classes;
+    /**
+     * @access private
+     * @var array $_validators
+     */
+    private $_validators = array();
+    /**
+     * @access private
+     * @var string $_errorMessage
+     */
+    private $_errorMessage;
+
+    /**
+     * Construct with hydrate attributes
+     *
+     * @param array $options
+     */
+    public function __construct(array $options = array()){
+        if (!empty($options)){
             $this->hydrate($options);
         }
     }
 
+    /**
+     * Builder
+     *
+     * @abstract
+     */
     abstract public function buildWidget();
 
-    public function hydrate($options)
-    {
-        foreach ($options as $type => $value)
-        {
+    /**
+     * Hydrate
+     *
+     * @param array $options
+     */
+    public function hydrate(array $options){
+        foreach ($options as $type => $value){
             $method = 'set'.ucfirst($type);
-
-            if (is_callable(array($this, $method)))
-            {
+            if (is_callable(array($this, $method))){
                 $this->$method($value);
             }
         }
     }
 
-    public function isValid()
-    {
-        foreach ($this->validators as $validator)
-        {
-            if (!$validator->isValid($this->value))
-            {
-                $this->errorMessage = $validator->errorMessage();
+    /**
+     * Check if value respects validators
+     *
+     * @return bool
+     */
+    public function isValid(){
+        foreach ($this->_validators as $validator){
+            if (!$validator->isValid($this->_value)){
+                $this->setErrorMessage($validator->errorMessage());
                 return false;
             }
         }
-
         return true;
     }
 
-    public function hasErrorMessage()
-    {
-        return !empty($this->errorMessage);
+    /**
+     * Getter $_label
+     *
+     * @return string $_label
+     */
+    public function label(){
+        return $this->_label;
     }
 
-    public function errorMessage(){
-        return $this->errorMessage;
-    }
-
-    public function setErrorMessage($message)
-    {
-        $this->errorMessage = $message;
-    }
-
-    public function label()
-    {
-        return $this->label;
-    }
-
-    public function setLabel($label)
-    {
-        if (is_string($label))
-        {
-            $this->label = $label;
+    /**
+     * Setter $_label
+     *
+     * @param string $label
+     */
+    public function setLabel($label){
+        if (is_string($label)){
+            $this->_label = $label;
         }
     }
 
-    public function length()
-    {
-        return $this->length;
+    /**
+     * Getter $_name
+     *
+     * @return string $_name
+     */
+    public function name(){
+        return $this->_name;
     }
 
-    public function setLength($length)
-    {
-        $length = (int) $length;
-
-        if ($length > 0)
-        {
-            $this->length = $length;
-        }
-    }
-
-    public function name()
-    {
-        return $this->name;
-    }
-
-    public function setName($name)
-    {
+    /**
+     * Setter $_name
+     *
+     * @param string $name
+     */
+    public function setName($name){
         if (is_string($name))
         {
-            $this->name = $name;
+            $this->_name = $name;
         }
     }
 
-    public function validators()
-    {
-        return $this->validators;
+    /**
+     * Check if $_value is not empty
+     *
+     * @return bool
+     */
+    public function hasValue(){
+        return !empty($this->_value);
     }
 
-    public function setValidators(array $validators)
-    {
-        foreach ($validators as $validator)
-        {
-            if ($validator instanceof Validator && !in_array($validator, $this->validators))
-            {
-                $this->validators[] = $validator;
+    /**
+     * Getter $_value
+     *
+     * @return string $_value
+     */
+    public function value(){
+        return $this->_value;
+    }
+
+    /**
+     * Setter $_value
+     *
+     * @param string $value
+     */
+    public function setValue($value){
+        if (is_string($value)){
+            $this->_value = $value;
+        }
+    }
+
+    /**
+     * Getter $_classes
+     *
+     * @return string $_classes
+     */
+    public function classes(){
+        return $this->_classes;
+    }
+
+    /**
+     * Setter $_classes
+     *
+     * @param string $classes
+     */
+    public function setClasses($classes){
+        if (is_string($classes)){
+            $this->_classes = $classes;
+        }
+    }
+
+    /**
+     * Getter $_validators
+     *
+     * @return array $_validators
+     */
+    public function validators(){
+        return $this->_validators;
+    }
+
+    /**
+     * Setter $_validators
+     *
+     * @param array $validators
+     */
+    public function setValidators(array $validators){
+        foreach ($validators as $validator){
+            if ($validator instanceof Validator && !in_array($validator, $this->_validators)){
+                $this->_validators[] = $validator;
             }
         }
     }
 
-    public function hasValue()
-    {
-        return !empty($this->value);
+    /**
+     * Check if $_errorMessage is not empty
+     *
+     * @return bool
+     */
+    public function hasErrorMessage(){
+        return !empty($this->_errorMessage);
     }
 
-    public function value()
-    {
-        return $this->value;
+    /**
+     * Getter $_errorMessage
+     *
+     * @return string $_errorMessage
+     */
+    public function errorMessage(){
+        return $this->_errorMessage;
     }
 
-    public function setValue($value)
-    {
-        if (is_string($value))
-        {
-            $this->value = $value;
-        }
+    /**
+     * Setter $_errorMessage
+     *
+     * @param string $message
+     */
+    public function setErrorMessage($message){
+        $this->_errorMessage = $message;
     }
 }

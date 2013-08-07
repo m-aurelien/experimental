@@ -7,28 +7,53 @@
 
 namespace Library\Form\Validator;
 
+/**
+ * Validator
+ *
+ * @package Library\Form\Validator
+ * @author Aurelien Mecheri
+ * @abstract
+ */
+abstract class Validator{
+    /**
+     * @access private
+     * @var string $_errorMessage
+     */
+    private $_errorMessage;
 
-abstract class Validator
-{
-    protected $errorMessage;
-
-    public function __construct($errorMessage)
-    {
+    /**
+     * Construct that set $_errorMessage
+     *
+     * @param $errorMessage
+     */
+    public function __construct($errorMessage){
         $this->setErrorMessage($errorMessage);
     }
 
+    /**
+     * Check if value is valid
+     * @param $value
+     * @abstract
+     */
     abstract public function isValid($value);
 
-    public function setErrorMessage($errorMessage)
-    {
-        if (is_string($errorMessage))
-        {
-            $this->errorMessage = $errorMessage;
+    /**
+     * Setter $_errorMessage
+     *
+     * @param string $errorMessage
+     */
+    public function setErrorMessage($errorMessage){
+        if (is_string($errorMessage)){
+            $this->_errorMessage = $errorMessage;
         }
     }
 
-    public function errorMessage()
-    {
-        return $this->errorMessage;
+    /**
+     * Getter $_errorMessage
+     *
+     * @return string $_errorMessage
+     */
+    public function errorMessage(){
+        return $this->_errorMessage;
     }
 }

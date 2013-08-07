@@ -55,8 +55,8 @@ class testController extends Backbone {
 
         //exit;
 
-        $gen = new OrmGen($this->app());
-        $gen->generate();
+        //$gen = new OrmGen($this->app());
+        //$gen->generate();
 /*
         $e = eOther::retrieveByPk(1, 2);
         $e->setOther('coolll');
@@ -79,6 +79,13 @@ class testController extends Backbone {
         */
 
         //var_dump(eOther::doSelect('SELECT * FROM other'));
+
+        $form = new ExempleFormBuilder();
+        $form->build();
+        if($form->form()->isPostAndValid()){
+            var_dump('valid !');
+        }
+        echo $form->form();
 
     }
 }
