@@ -29,6 +29,9 @@ class FrontApplication extends Application{
 
         $controller->skin()->css()->prependSource('bootstrap.min');
 
+        $this->stats()->GlobalVisit();
+        $this->stats()->DailyVisit();
+
         $this->httpResponse()->setSkin($controller->skin());
         $this->httpResponse()->send();
     }

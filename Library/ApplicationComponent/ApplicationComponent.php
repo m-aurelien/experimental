@@ -38,6 +38,10 @@ abstract class ApplicationComponent{
         return $this->app->logger();
     }
 
+    public function stats(){
+        return $this->app->stats();
+    }
+
     public function cache(){
         return $this->app->cache();
     }

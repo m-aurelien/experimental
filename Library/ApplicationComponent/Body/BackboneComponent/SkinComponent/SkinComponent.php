@@ -36,6 +36,10 @@ abstract class SkinComponent{
         return $this->skin->logger();
     }
 
+    public function stats(){
+        return $this->skin->stats();
+    }
+
     public function cache(){
         return $this->skin->cache();
     }

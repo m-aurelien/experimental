@@ -3,8 +3,6 @@ eXtal
 
  TO DO :
 
-  - Systeme de statistiques
-  - Session
   - Tout commenter !
 
 ============
@@ -15,9 +13,10 @@ eXtal
   - Layout (à voir, peut être tout simplement lié au moteur de templates)
   - Models
   - I18n
-  - User & Filter
+  - User avec session & Filter
   - Envoi de Mail (à tester)
-  - DAO
+  - Systeme de statistiques
+  - Cron
 
 ============
 

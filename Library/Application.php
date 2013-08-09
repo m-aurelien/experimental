@@ -16,6 +16,7 @@ use Library\ApplicationComponent\Http\HTTPResponse;
 use Library\ApplicationComponent\I18n\I18nManager;
 use Library\ApplicationComponent\Log\Logger;
 use Library\ApplicationComponent\Cache\Cache;
+use Library\ApplicationComponent\Log\Stats;
 use Library\Route\Router;
 
 /**
@@ -54,6 +55,11 @@ abstract class Application{
     private $_logger;
     /**
      * @access private
+     * @var Stats $_stats
+     */
+    private $_stats;
+    /**
+     * @access private
      * @var Cache $_cache
      */
     private $_cache;
@@ -81,6 +87,7 @@ abstract class Application{
         $this->_httpResponse = new HTTPResponse($this);
         $this->_config       = new Config($this);
         $this->_logger       = new Logger($this);
+        $this->_stats        = new Stats($this);
         $this->_cache        = new Cache($this);
         $this->_user         = new User($this);
         $this->_i18n         = new I18nManager($this);
@@ -158,6 +165,15 @@ abstract class Application{
      */
     public function logger(){
         return $this->_logger;
+    }
+
+    /**
+     * Getter $_stats
+     *
+     * @return Stats $_stats
+     */
+    public function stats(){
+        return $this->_stats;
     }
 
     /**

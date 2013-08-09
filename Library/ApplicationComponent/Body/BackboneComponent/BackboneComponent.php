@@ -36,6 +36,10 @@ abstract class BackboneComponent{
         return $this->backbone->logger();
     }
 
+    public function stats(){
+        return $this->backbone->stats();
+    }
+
     public function cache(){
         return $this->backbone->cache();
     }

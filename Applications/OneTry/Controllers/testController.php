@@ -13,6 +13,7 @@ use Applications\OneTry\Models\ORM\eOther;
 use Applications\OneTry\Services\FormBuilder\ExempleFormBuilder;
 use Library\ApplicationComponent\Body\Backbone;
 use Library\ApplicationComponent\Database\OrmGen;
+use Library\Helper\Cron;
 use Library\Helper\Filter;
 use Library\Helper\Token;
 
@@ -90,6 +91,7 @@ class testController extends Backbone {
 
         //var_dump(eOther::doSelect('SELECT * FROM other'));
 
+        /*
         $form = new ExempleFormBuilder();
         $form->build();
         if($form->form()->isPostAndValid()){
@@ -99,7 +101,16 @@ class testController extends Backbone {
         echo $form->form();
 
         var_dump($this->user()->authId());
+        */
 
-
+        /*
+        $cron = new Cron();
+        $cron->addScript('/opt/local/bin/php54 /opt/local/apache2/htdocs/projects/experimental/cronTest.php', 'Test des crons');
+        $cron->addScript('/opt/local/bin/php54 /opt/local/apache2/htdocs/projects/experimental/cronTest2.php');
+        $cron->removeScript(4);
+        $cron->save();
+        */
     }
+
+
 }
